@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { LockService, SeamService, DatabaseService } from '../services';
+import { LockService, SeamService, DatabaseService } from '../services/index.js';
 import type { HealthResponse } from '../types/index.js';
 
 export class HealthController {
@@ -25,30 +25,40 @@ export class HealthController {
       const healthResult = await this.lockService.checkHealth();
       const providerConfig = this.lockService.getProviderConfig();
       
-      const response: HealthResponse = {
-        status: 'ok',
-        timestamp: new Date().toISOString(),
-        version: process.env.npm_package_version || '1.0.0',
-        environment: process.env.NODE_ENV || 'development',
-        seam: {
-          environment: providerConfig.environment,
-          hasApiKey: providerConfig.hasApiKey,
-          hasWorkspaceId: providerConfig.hasWorkspaceId,
-          connected: healthResult.success && healthResult.data?.connected || false
-        }
-      };
-
       if (healthResult.success) {
+        const response: HealthResponse = {
+          status: 'ok',
+          timestamp: new Date().toISOString(),
+          version: process.env.npm_package_version || '1.0.0',
+          environment: process.env.NODE_ENV || 'development',
+          seam: {
+            environment: providerConfig.environment,
+            hasApiKey: providerConfig.hasApiKey,
+            hasWorkspaceId: providerConfig.hasWorkspaceId,
+            connected: healthResult.data?.connected || false,
+          },
+        };
         res.status(200).json(response);
       } else {
-        response.status = 'error';
-        response.seam.error = healthResult.error;
-        res.status(503).json(response);
+        const errorResponse = {
+          status: 'error',
+          timestamp: new Date().toISOString(),
+          version: process.env.npm_package_version || '1.0.0',
+          environment: process.env.NODE_ENV || 'development',
+          seam: {
+            environment: providerConfig.environment,
+            hasApiKey: providerConfig.hasApiKey,
+            hasWorkspaceId: providerConfig.hasWorkspaceId,
+            connected: healthResult.data?.connected || false,
+            error: healthResult.error,
+          },
+        };
+        res.status(503).json(errorResponse);
       }
     } catch (error) {
       console.error('💥 Exception in HealthController.getHealth:', error);
       
-      const response: HealthResponse = {
+      const errorResponse = {
         status: 'error',
         timestamp: new Date().toISOString(),
         version: process.env.npm_package_version || '1.0.0',
@@ -62,7 +72,7 @@ export class HealthController {
         }
       };
       
-      res.status(500).json(response);
+      res.status(500).json(errorResponse);
     }
   };
 

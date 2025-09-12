@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import locksRouter from './locks.routes.js';
+import locksRouter from './locks.routes';
 import healthRouter from './health.routes.js';
 
 const router = Router();

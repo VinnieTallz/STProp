@@ -3,7 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import { config } from 'dotenv';
 import routes from './routes/index.js';
-import { DatabaseService } from './services/Database.service.js';
+import { DatabaseService } from './services/database.service.js';
 
 // Load environment variables
 config();

@@ -1,5 +1,5 @@
-export { SeamService } from './seam.service.js';
-export { LockService } from './lock.service.js';
+export { SeamService } from './Seam.service.js';
+export { LockService } from './Lock.service.js';
 export { DatabaseService } from './database.service.js';
 
 // Export types for use in other layers
