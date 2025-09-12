@@ -2,27 +2,18 @@
 let reservations = [
   {
     id: 1,
-    customerName: 'John Doe',
-    email: 'john.doe@example.com',
-    phone: '+1-555-0123',
-    date: '2025-02-15',
-    time: '19:00',
-    partySize: 4,
-    specialRequests: 'Window table preferred',
-    status: 'confirmed',
-    createdAt: new Date().toISOString()
+    reservation_id: "res01",
+    property_id: "123456",
+    property_address: "123 fake street",
+    check_in_date: "2025-10-01T15:00:00Z",
+    check_out_date: "2025-10-05T11:00:00Z"
   },
   {
-    id: 2,
-    customerName: 'Jane Smith',
-    email: 'jane.smith@example.com',
-    phone: '+1-555-0456',
-    date: '2025-02-16',
-    time: '20:00',
-    partySize: 2,
-    specialRequests: '',
-    status: 'pending',
-    createdAt: new Date().toISOString()
+    reservation_id: "res01",
+    property_id: "123456",
+    property_address: "123 fake street",
+    check_in_date: "2025-10-01T15:00:00Z",
+    check_out_date: "2025-10-05T11:00:00Z"
   }
 ];
 
@@ -30,7 +21,9 @@ let nextId = 3;
 
 class ReservationService {
   getAllReservations() {
-    return reservations.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    return reservations.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
   }
 
   getReservationById(id) {
@@ -41,18 +34,18 @@ class ReservationService {
     const newReservation = {
       id: nextId++,
       ...reservationData,
-      status: reservationData.status || 'pending',
+      status: reservationData.status || "pending",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
-    
+
     reservations.push(newReservation);
     return newReservation;
   }
 
   updateReservation(id, updateData) {
     const index = reservations.findIndex(reservation => reservation.id === id);
-    
+
     if (index === -1) {
       return null;
     }
@@ -70,7 +63,7 @@ class ReservationService {
 
   deleteReservation(id) {
     const index = reservations.findIndex(reservation => reservation.id === id);
-    
+
     if (index === -1) {
       return false;
     }
