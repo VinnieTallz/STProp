@@ -9,7 +9,7 @@ import { DatabaseService } from './services/database.service.js';
 config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 80;
 
 // Security middleware
 app.use(helmet({
