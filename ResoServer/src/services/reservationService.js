@@ -1,7 +1,6 @@
 // In-memory storage for simplicity
 let reservations = [
   {
-    id: 1,
     reservation_id: "res01",
     property_id: "123456",
     property_address: "123 fake street",
@@ -9,9 +8,9 @@ let reservations = [
     check_out_date: "2025-10-05T11:00:00Z"
   },
   {
-    reservation_id: "res01",
-    property_id: "123456",
-    property_address: "123 fake street",
+    reservation_id: "res02",
+    property_id: "987654",
+    property_address: "456 fake street",
     check_in_date: "2025-10-01T15:00:00Z",
     check_out_date: "2025-10-05T11:00:00Z"
   }
